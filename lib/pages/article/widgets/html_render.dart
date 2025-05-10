@@ -88,7 +88,7 @@ Widget htmlRender({
     ),
     'p': Style(
       margin: Margins.only(bottom: 4),
-      textIndent: Length(20),
+      padding: HtmlPaddings.only(left: 20),
       textAlign: TextAlign.start,
     ),
     'span': Style(
