@@ -70,6 +70,40 @@ Widget htmlRender({
           return const SizedBox.shrink();
         }
       },
+    },
+    TagExtension(
+      tagsToExtend: <String>{'ol'},
+      builder: (ExtensionContext extensionContext) {
+        final children = extensionContext.innerHtml;
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children
+                .split('</li>') // 按 <li> 标签分割内容
+                .where((item) => item.trim().isNotEmpty)
+                .map((item) {
+            final index = children.split('</li>').indexOf(item) + 1; // 计算序号
+            final content = item.replaceFirst('<li>', '').trim();
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$index.',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(extensionContext.buildContext).primaryColor,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(content),
+                ),
+              ],
+            );
+          }).toList(),
+        }
+      },
     ),
   ];
   final style = {
@@ -87,8 +121,7 @@ Widget htmlRender({
       lineHeight: LineHeight.percent(-1),
     ),
     'p': Style(
-      margin: Margins.only(bottom: 4),
-      padding: HtmlPaddings.only(left: 20),
+      margin: Margins.only(bottom: 4,left: 20),
       textAlign: TextAlign.start,
     ),
     'span': Style(
@@ -98,17 +131,11 @@ Widget htmlRender({
     'div': Style(
       height: Height.auto()
     ),
-    'ol': Style(
-      listStyleType: ListStyleType.decimal,
-    ),
-    'ul': Style(
-      listStyleType: ListStyleType.disc,
-    ),
     'li > p': Style(
       display: Display.inline,
     ),
     'li': Style(
-      padding: HtmlPaddings.only(left: 20, bottom: 4),
+      padding: HtmlPaddings.only(bottom: 4),
       listStylePosition: ListStylePosition.inside,
       textAlign: TextAlign.start,
     ),
