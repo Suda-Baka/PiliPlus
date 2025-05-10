@@ -37,7 +37,7 @@ def _keyPassword = System.getenv("KEY_PASSWORD") ?: keystoreProperties["keyPassw
 android {
     compileSdkVersion flutter.compileSdkVersion
 
-    namespace 'com.examle.piliplus'
+    namespace 'com.example.piliplus'
     ndkVersion flutter.ndkVersion
 
     compileOptions {
