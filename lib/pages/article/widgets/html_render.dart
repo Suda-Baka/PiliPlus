@@ -88,20 +88,33 @@ Widget htmlRender({
     ),
     'p': Style(
       margin: Margins.only(bottom: 4),
+      textIndent: Length(20),
+      textAlign: TextAlign.start,
     ),
     'span': Style(
       fontSize: FontSize.large,
       height: Height(1.8),
     ),
-    'div': Style(height: Height.auto()),
+    'div': Style(
+      height: Height.auto()
+    ),
+    'ol': Style(
+      listStyleType: ListStyleType.decimal,
+    ),
+    'ul': Style(
+      listStyleType: ListStyleType.disc,
+    ),
     'li > p': Style(
       display: Display.inline,
     ),
     'li': Style(
-      padding: HtmlPaddings.only(bottom: 4),
-      textAlign: TextAlign.justify,
+      padding: HtmlPaddings.only(left: 20, bottom: 4),
+      listStylePosition: ListStylePosition.inside,
+      textAlign: TextAlign.start,
     ),
-    'img': Style(margin: Margins.only(top: 4, bottom: 4)),
+    'img': Style(
+      margin: Margins.only(top: 4, bottom: 4)
+    ),
     'h1,h2': Style(
       fontSize: FontSize.xLarge,
       fontWeight: FontWeight.bold,
