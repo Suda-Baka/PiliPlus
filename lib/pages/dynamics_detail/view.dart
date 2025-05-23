@@ -244,25 +244,12 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   void _scrollToComment() {
     final ctx = _commentHeaderKey.currentContext;
     if (ctx != null) {
-      final double topPadding =
-          kToolbarHeight + MediaQuery.of(context).padding.top;
       Scrollable.ensureVisible(
         ctx,
         duration: const Duration(milliseconds: 320),
         alignment: 0,
         curve: Curves.easeInOut,
       );
-
-      Future.delayed(const Duration(milliseconds: 350), () {
-        final scrollController = _controller.scrollController;
-        if (scrollController.hasClients) {
-          scrollController.animateTo(
-            scrollController.offset - topPadding,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-          );
-        }
-      });
     }
   }
 
