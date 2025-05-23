@@ -358,6 +358,7 @@ class PageUtils {
           '/dynamicDetail',
           arguments: {
             'item': item,
+            'action': action,
           },
         );
       }

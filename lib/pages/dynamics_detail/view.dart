@@ -56,6 +56,8 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   late final _key = GlobalKey<ScaffoldState>();
 
+  final GlobalKey _commentHeaderKey = GlobalKey();
+
   Function(dynamic imgList, dynamic index)? get _getImageCallback =>
       _horizontalPreview
           ? (imgList, index) {
@@ -100,6 +102,12 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   @override
   void initState() {
     super.initState();
+    final args = Get.arguments;
+    if (args != null && args['action'] == 'comment') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToComment();
+      });
+    }
     _fabAnimationCtr = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -230,6 +238,31 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
     if (_isFabVisible) {
       _isFabVisible = false;
       _fabAnimationCtr.reverse();
+    }
+  }
+
+  void _scrollToComment() {
+    final ctx = _commentHeaderKey.currentContext;
+    if (ctx != null) {
+      final double topPadding =
+          kToolbarHeight + MediaQuery.of(context).padding.top;
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 320),
+        alignment: 0,
+        curve: Curves.easeInOut,
+      );
+
+      Future.delayed(const Duration(milliseconds: 350), () {
+        final scrollController = _controller.scrollController;
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
+            scrollController.offset - topPadding,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
     }
   }
 
@@ -644,6 +677,7 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   SliverPersistentHeader replyPersistentHeader(ThemeData theme) {
     return SliverPersistentHeader(
+      key: _commentHeaderKey,
       delegate: CustomSliverPersistentHeaderDelegate(
         bgColor: theme.colorScheme.surface,
         child: Container(
