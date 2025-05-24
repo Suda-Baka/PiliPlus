@@ -352,6 +352,7 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
                   physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
                     SliverToBoxAdapter(
+                      key: _commentHeaderKey,
                       child: DynamicPanel(
                         item: _controller.dynItem,
                         source: 'detail',
@@ -664,7 +665,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   SliverPersistentHeader replyPersistentHeader(ThemeData theme) {
     return SliverPersistentHeader(
-      key: _commentHeaderKey,
       delegate: CustomSliverPersistentHeaderDelegate(
         bgColor: theme.colorScheme.surface,
         child: Container(
