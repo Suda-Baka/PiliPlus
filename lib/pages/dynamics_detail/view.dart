@@ -337,6 +337,10 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
               )
             : _buildBody(context.orientation, theme),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _scrollToComment,
+        child: Icon(Icons.arrow_downward),
+      ),
     );
   }
 
@@ -665,6 +669,7 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   SliverPersistentHeader replyPersistentHeader(ThemeData theme) {
     return SliverPersistentHeader(
+      key: _commentHeaderKey,
       delegate: CustomSliverPersistentHeaderDelegate(
         bgColor: theme.colorScheme.surface,
         child: Container(
