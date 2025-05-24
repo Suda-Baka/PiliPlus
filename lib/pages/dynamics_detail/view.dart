@@ -337,10 +337,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
               )
             : _buildBody(context.orientation, theme),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _scrollToComment,
-        child: Icon(Icons.arrow_downward),
-      ),
     );
   }
 
@@ -719,6 +715,16 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   Widget replyList(
       ThemeData theme, LoadingState<List<ReplyInfo>?> loadingState) {
+    if (loadingState is Success<List<ReplyInfo>?> &&
+        loadingState.response != null &&
+        loadingState.response!.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final args = Get.arguments;
+        if (args != null && args['action'] == 'comment') {
+          _scrollToComment();
+        }
+      });
+    }
     return switch (loadingState) {
       Loading() => SliverList.builder(
           itemBuilder: (context, index) {

@@ -1156,6 +1156,12 @@ class ReplyItemGrpc extends StatelessWidget {
           ListTile(
             onTap: () => menuActionHandler('saveReply'),
             minLeadingWidth: 0,
+            leading: const Icon(Icons.share, size: 19),
+            title: Text('转发评论', style: style),
+          ),
+          ListTile(
+            onTap: () => menuActionHandler('saveReply'),
+            minLeadingWidth: 0,
             leading: const Icon(Icons.save_alt, size: 19),
             title: Text('保存评论', style: style),
           ),
