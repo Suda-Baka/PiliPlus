@@ -102,12 +102,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   @override
   void initState() {
     super.initState();
-    final args = Get.arguments;
-    if (args != null && args['action'] == 'comment') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollToComment();
-      });
-    }
     _fabAnimationCtr = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -336,10 +330,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
                 child: _buildBody(context.orientation, theme),
               )
             : _buildBody(context.orientation, theme),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _scrollToComment,
-        child: Icon(Icons.arrow_downward),
       ),
     );
   }
@@ -669,7 +659,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   SliverPersistentHeader replyPersistentHeader(ThemeData theme) {
     return SliverPersistentHeader(
-      key: _commentHeaderKey,
       delegate: CustomSliverPersistentHeaderDelegate(
         bgColor: theme.colorScheme.surface,
         child: Container(
@@ -727,6 +716,12 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           itemCount: 8,
         ),
       Success(:var response) => response?.isNotEmpty == true
+          final args = Get.arguments;
+          if (args != null && args['action'] == 'comment') {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _scrollToComment();
+            });
+          }
           ? SliverList.builder(
               itemBuilder: (context, index) {
                 if (index == response.length) {
@@ -783,3 +778,4 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
     };
   }
 }
+
