@@ -720,7 +720,7 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           },
           itemCount: 8,
         ),
-      Success(:var response)
+      case Success(:var response):
         _scrollToComment();
         return response?.isNotEmpty == true
           ? SliverList.builder(
