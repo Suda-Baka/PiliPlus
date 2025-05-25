@@ -236,14 +236,19 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   }
 
   void _scrollToComment() {
-    final ctx = _commentHeaderKey.currentContext;
-    if (ctx != null) {
-      Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 320),
-        alignment: 0,
-        curve: Curves.easeInOut,
-      );
+    final args = Get.arguments;
+    if (args != null && args['action'] == 'comment') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final ctx = _commentHeaderKey.currentContext;
+        if (ctx != null) {
+          Scrollable.ensureVisible(
+            ctx,
+            duration: const Duration(milliseconds: 320),
+            alignment: 0,
+            curve: Curves.easeInOut,
+          );
+        }
+      });
     }
   }
 
@@ -715,14 +720,9 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           },
           itemCount: 8,
         ),
-      Success(:var response) {
-        final args = Get.arguments;
-        if (args != null && args['action'] == 'comment') {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _scrollToComment();
-          });
-        }
-        return response?.isNotEmpty == true
+      Success(:var response)
+        _scrollToComment();
+        response?.isNotEmpty == true
           ? SliverList.builder(
               itemBuilder: (context, index) {
                 if (index == response.length) {
@@ -772,7 +772,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           : HttpError(
               onReload: _controller.onReload,
             ),
-      }
       Error(:var errMsg) => HttpError(
           errMsg: errMsg,
           onReload: _controller.onReload,
