@@ -715,13 +715,14 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           },
           itemCount: 8,
         ),
-      Success(:var response) => response?.isNotEmpty == true
-          final args = Get.arguments;
-          if (args != null && args['action'] == 'comment') {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _scrollToComment();
-            });
-          }
+      Success(:var response) {
+        final args = Get.arguments;
+        if (args != null && args['action'] == 'comment') {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToComment();
+          });
+        }
+        return response?.isNotEmpty == true
           ? SliverList.builder(
               itemBuilder: (context, index) {
                 if (index == response.length) {
@@ -771,6 +772,7 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           : HttpError(
               onReload: _controller.onReload,
             ),
+      }
       Error(:var errMsg) => HttpError(
           errMsg: errMsg,
           onReload: _controller.onReload,
