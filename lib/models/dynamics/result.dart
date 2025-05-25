@@ -29,7 +29,6 @@ class DynamicItemModel {
   DynamicItemModel? orig;
   String? type;
   bool? visible;
-  bool? isForwarded;
 
   // opus
   Fallback? fallback;
@@ -41,7 +40,7 @@ class DynamicItemModel {
         ? ItemModulesModel()
         : ItemModulesModel.fromJson(json['modules']);
     if (json['orig'] != null) {
-      orig = DynamicItemModel.fromJson(json['orig'])..isForwarded = true;
+      orig = DynamicItemModel.fromJson(json['orig']);
     }
     type = json['type'];
     visible = json['visible'];

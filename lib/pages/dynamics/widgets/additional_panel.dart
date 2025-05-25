@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
-Widget addWidget(
-    ThemeData theme, DynamicItemModel item, BuildContext context, type,
+Widget addWidget(ThemeData theme, DynamicItemModel item, BuildContext context,
     {floor = 1}) {
+  final type = item.modules.moduleDynamic?.additional?.type;
   late final Color bgColor = floor == 1
       ? theme.dividerColor.withValues(alpha: 0.08)
       : theme.colorScheme.surface;

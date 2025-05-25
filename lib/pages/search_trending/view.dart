@@ -114,6 +114,7 @@ class _SearchTrendingPageState extends State<SearchTrendingPage> {
                 onRefresh: _controller.onRefresh,
                 child: CustomScrollView(
                   controller: _controller.scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
                     SliverToBoxAdapter(
                       child: Image.asset(

@@ -4,6 +4,7 @@ import 'package:PiliPlus/common/widgets/scroll_physics.dart';
 import 'package:PiliPlus/http/loading_state.dart';
 import 'package:PiliPlus/models/common/image_type.dart';
 import 'package:PiliPlus/models/live/live_area_list/area_item.dart';
+import 'package:PiliPlus/pages/live_area_detail/child/controller.dart';
 import 'package:PiliPlus/pages/live_area_detail/child/view.dart';
 import 'package:PiliPlus/pages/live_area_detail/controller.dart';
 import 'package:PiliPlus/pages/live_search/view.dart';
@@ -76,6 +77,17 @@ class _LiveAreaDetailPageState extends State<LiveAreaDetailPage> {
                               tabs: response
                                   .map((e) => Tab(text: e.name ?? ''))
                                   .toList(),
+                              onTap: (index) {
+                                try {
+                                  if (!DefaultTabController.of(context)
+                                      .indexIsChanging) {
+                                    final item = response[index];
+                                    Get.find<LiveAreaChildController>(
+                                            tag: '${item.id}${item.parentId}')
+                                        .animateToTop();
+                                  }
+                                } catch (_) {}
+                              },
                             ),
                           ),
                           iconButton(

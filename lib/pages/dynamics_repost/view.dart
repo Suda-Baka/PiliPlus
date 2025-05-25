@@ -339,6 +339,45 @@ class _RepostPanelState extends CommonPublishPageState<RepostPanel> {
   @override
   Widget? get customPanel => EmotePanel(onChoose: onChooseEmote);
 
+  List<Map<String, dynamic>>? extraContent(DynamicItemModel item) {
+    try {
+      return [
+        {"raw_text": "//", "type": 1, "biz_id": ""},
+        {
+          "raw_text": "@${item.modules.moduleAuthor!.name}",
+          "type": 2,
+          "biz_id": item.modules.moduleAuthor!.mid.toString(),
+        },
+        {"raw_text": ":", "type": 1, "biz_id": ""},
+        ...item.modules.moduleDynamic!.desc!.richTextNodes!.map(
+          (e) {
+            int? type;
+            String? bizId;
+            switch (e.type) {
+              case 'RICH_TEXT_NODE_TYPE_EMOJI':
+                type = 9;
+                bizId = '';
+              case 'RICH_TEXT_NODE_TYPE_AT':
+                type = 2;
+                bizId = e.rid;
+              case 'RICH_TEXT_NODE_TYPE_TEXT':
+              default:
+                type = 1;
+                bizId = '';
+            }
+            return {
+              "raw_text": e.origText,
+              "type": type,
+              "biz_id": bizId,
+            };
+          },
+        ),
+      ];
+    } catch (_) {
+      return null;
+    }
+  }
+
   @override
   Future<void> onCustomPublish(
       {required String message, List? pictures}) async {
@@ -348,6 +387,8 @@ class _RepostPanelState extends CommonPublishPageState<RepostPanel> {
       rid: widget.rid,
       dynType: widget.dynType,
       rawText: editController.text,
+      extraContent:
+          widget.item?.orig != null ? extraContent(widget.item!) : null,
     );
     if (result['status']) {
       Get.back();

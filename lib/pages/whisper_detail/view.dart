@@ -147,7 +147,7 @@ class _WhisperDetailPageState
               shrinkWrap: true,
               reverse: true,
               itemCount: response!.length,
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               physics: const AlwaysScrollableScrollPhysics(
                 parent: ClampingScrollPhysics(),
               ),

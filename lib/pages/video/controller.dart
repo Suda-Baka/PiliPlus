@@ -23,6 +23,7 @@ import 'package:PiliPlus/models/common/video/video_quality.dart';
 import 'package:PiliPlus/models/video/later.dart';
 import 'package:PiliPlus/models/video/play/url.dart';
 import 'package:PiliPlus/models/video_detail_res.dart';
+import 'package:PiliPlus/models/video_pbp/data.dart';
 import 'package:PiliPlus/pages/search/widgets/search_text.dart';
 import 'package:PiliPlus/pages/video/introduction/ugc/controller.dart';
 import 'package:PiliPlus/pages/video/medialist/view.dart';
@@ -1596,12 +1597,12 @@ class VideoDetailController extends GetxController
     showSteinEdgeInfo.value = false;
   }
 
-  List? dmTrend;
+  List<double>? dmTrend;
 
   Future<void> _getDmTrend() async {
-    dmTrend = [];
+    dmTrend = null;
     try {
-      dynamic res = await Request().get(
+      var res = await Request().get(
         'https://bvc.bilivideo.com/pbp/data',
         queryParameters: {
           'bvid': bvid,
@@ -1609,12 +1610,12 @@ class VideoDetailController extends GetxController
         },
       );
 
-      int stepSec = (res.data['step_sec'] as num?)?.toInt() ?? 0;
-      late List events = (res.data['events']['default'] as List?) ?? [];
-      if (stepSec != 0 && events.isNotEmpty) {
-        dmTrend = events;
+      PbpData data = PbpData.fromJson(res.data);
+      int stepSec = data.stepSec ?? 0;
+      if (stepSec != 0 && data.events?.eDefault?.isNotEmpty == true) {
+        dmTrend = data.events?.eDefault;
         if (plPlayerController.dmTrend.isEmpty) {
-          plPlayerController.dmTrend.value = events;
+          plPlayerController.dmTrend.value = dmTrend!;
         }
       }
     } catch (e) {

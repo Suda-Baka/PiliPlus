@@ -936,10 +936,11 @@ class HeaderControlState extends State<HeaderControl> {
         final theme = Theme.of(context);
 
         final sliderTheme = SliderThemeData(
+          trackHeight: 10,
           trackShape: MSliderTrackShape(),
           thumbColor: theme.colorScheme.primary,
           activeTrackColor: theme.colorScheme.primary,
-          trackHeight: 10,
+          inactiveTrackColor: theme.colorScheme.onInverseSurface,
           thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6.0),
         );
 
@@ -1274,10 +1275,11 @@ class HeaderControlState extends State<HeaderControl> {
         final theme = Theme.of(context);
 
         final sliderTheme = SliderThemeData(
+          trackHeight: 10,
           trackShape: MSliderTrackShape(),
           thumbColor: theme.colorScheme.primary,
           activeTrackColor: theme.colorScheme.primary,
-          trackHeight: 10,
+          inactiveTrackColor: theme.colorScheme.onInverseSurface,
           thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6.0),
         );
 

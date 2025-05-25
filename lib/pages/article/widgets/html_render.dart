@@ -55,6 +55,7 @@ Widget htmlRender({
                 } else {
                   context.imageView(
                     imgList: [SourceModel(url: imgUrl)],
+                    quality: 60,
                   );
                 }
               },
@@ -125,17 +126,15 @@ Widget htmlRender({
       margin: Margins.zero,
     ),
   };
-  return SelectionArea(
-    child: element != null
-        ? Html.fromElement(
-            documentElement: element,
-            extensions: extensions,
-            style: style,
-          )
-        : Html(
-            data: html,
-            extensions: extensions,
-            style: style,
-          ),
-  );
+  return element != null
+      ? Html.fromElement(
+          documentElement: element,
+          extensions: extensions,
+          style: style,
+        )
+      : Html(
+          data: html,
+          extensions: extensions,
+          style: style,
+        );
 }

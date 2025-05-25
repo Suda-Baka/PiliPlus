@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:PiliPlus/common/widgets/badge.dart';
+import 'package:PiliPlus/common/widgets/dialog/dialog.dart';
 import 'package:PiliPlus/common/widgets/pendant_avatar.dart';
 import 'package:PiliPlus/grpc/bilibili/app/im/v1.pb.dart'
     show Session, SessionId, SessionPageType, SessionType, UnreadStyle;
@@ -71,7 +72,12 @@ class WhisperSessionItem extends StatelessWidget {
                       dense: true,
                       onTap: () {
                         Get.back();
-                        onRemove(item.id.privateId.talkerUid.toInt());
+                        showConfirmDialog(
+                          context: context,
+                          title: '确定删除该对话？',
+                          onConfirm: () =>
+                              onRemove(item.id.privateId.talkerUid.toInt()),
+                        );
                       },
                       title: const Text('删除'),
                     ),

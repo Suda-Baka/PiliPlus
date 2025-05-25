@@ -596,7 +596,7 @@ class PiliScheme {
             : pathSegments.first;
     debugPrint('area: $area');
     switch (area) {
-      case 'note':
+      case 'note' || 'note-app':
         String? id = uri.queryParameters['cvid'];
         if (id != null) {
           PageUtils.toDupNamed(

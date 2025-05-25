@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: uri_does_not_exist_in_doc_import
+
 /// @docImport 'package:flutter/services.dart';
 /// @docImport 'bottom_navigation_bar.dart';
 /// @docImport 'navigation_rail.dart';

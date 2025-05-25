@@ -116,6 +116,7 @@ class MsgHttp {
     int? publishTime,
     ReplyOptionType? replyOption,
     int? privatePub,
+    List<Map<String, dynamic>>? extraContent,
   }) async {
     var res = await Request().post(
       Api.createDynamic,
@@ -133,7 +134,8 @@ class MsgHttp {
                 "raw_text": rawText,
                 "type": 1,
                 "biz_id": "",
-              }
+              },
+              if (extraContent != null) ...extraContent,
             ]
           },
           if (privatePub != null || replyOption != null || publishTime != null)

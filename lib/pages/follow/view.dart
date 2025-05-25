@@ -113,7 +113,7 @@ class _FollowPageState extends State<FollowPage> {
                     return Tab(
                         text: '${item.name}${count != null ? '($count)' : ''}');
                   });
-                }).toList(),
+                }),
                 onTap: (value) {
                   if (!_followController.tabController!.indexIsChanging) {
                     final item = _followController.tabs[value];
