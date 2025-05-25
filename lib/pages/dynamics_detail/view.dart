@@ -721,8 +721,8 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           itemCount: 8,
         ),
       Success(:var response)
-        _scrollToComment();
-        response?.isNotEmpty == true
+          _scrollToComment();
+          return response?.isNotEmpty == true
           ? SliverList.builder(
               itemBuilder: (context, index) {
                 if (index == response.length) {
