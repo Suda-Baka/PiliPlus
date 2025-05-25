@@ -102,12 +102,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   @override
   void initState() {
     super.initState();
-    final args = Get.arguments;
-    if (args != null && args['action'] == 'comment') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollToComment();
-      });
-    }
     _fabAnimationCtr = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -242,14 +236,19 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
   }
 
   void _scrollToComment() {
-    final ctx = _commentHeaderKey.currentContext;
-    if (ctx != null) {
-      Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 320),
-        alignment: 0,
-        curve: Curves.easeInOut,
-      );
+    final args = Get.arguments;
+    if (args != null && args['action'] == 'comment') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final ctx = _commentHeaderKey.currentContext;
+        if (ctx != null) {
+          Scrollable.ensureVisible(
+            ctx,
+            duration: const Duration(milliseconds: 320),
+            alignment: 0,
+            curve: Curves.easeInOut,
+          );
+        }
+      });
     }
   }
 
@@ -665,7 +664,6 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
 
   SliverPersistentHeader replyPersistentHeader(ThemeData theme) {
     return SliverPersistentHeader(
-      key: _commentHeaderKey,
       delegate: CustomSliverPersistentHeaderDelegate(
         bgColor: theme.colorScheme.surface,
         child: Container(
@@ -732,7 +730,9 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
           },
           itemCount: 8,
         ),
-      Success(:var response) => response?.isNotEmpty == true
+      case Success(:var response):
+        _scrollToComment();
+        return response?.isNotEmpty == true
           ? SliverList.builder(
               itemBuilder: (context, index) {
                 if (index == response.length) {
@@ -789,3 +789,4 @@ class _DynamicDetailPageState extends State<DynamicDetailPage>
     };
   }
 }
+
